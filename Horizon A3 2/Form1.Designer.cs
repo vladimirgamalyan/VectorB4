@@ -41,6 +41,7 @@
             this.buttonCreateTap = new System.Windows.Forms.Button();
             this.buttonConvert = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.buttonFixReturn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRadius)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpeed)).BeginInit();
@@ -53,48 +54,53 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(279, 27);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(275, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 13);
+            this.label1.Size = new System.Drawing.Size(184, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Радиус сканирования (мм)";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(279, 132);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(275, 129);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 13);
+            this.label2.Size = new System.Drawing.Size(161, 17);
             this.label2.TabIndex = 2;
             this.label2.Text = "Шаг сканирования (мм)";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(279, 204);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(275, 181);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.Size = new System.Drawing.Size(80, 17);
             this.label3.TabIndex = 3;
             this.label3.Text = "Отход (мм)";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(279, 55);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(275, 78);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(130, 13);
+            this.label4.Size = new System.Drawing.Size(166, 17);
             this.label4.TabIndex = 4;
             this.label4.Text = "Скорость сканирования";
             // 
             // numericUpDownRadius
             // 
             this.numericUpDownRadius.DecimalPlaces = 2;
+            this.numericUpDownRadius.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numericUpDownRadius.Increment = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDownRadius.Location = new System.Drawing.Point(437, 25);
+            this.numericUpDownRadius.Location = new System.Drawing.Point(465, 17);
             this.numericUpDownRadius.Maximum = new decimal(new int[] {
             500,
             0,
@@ -106,7 +112,7 @@
             0,
             0});
             this.numericUpDownRadius.Name = "numericUpDownRadius";
-            this.numericUpDownRadius.Size = new System.Drawing.Size(68, 20);
+            this.numericUpDownRadius.Size = new System.Drawing.Size(188, 46);
             this.numericUpDownRadius.TabIndex = 5;
             this.numericUpDownRadius.Value = new decimal(new int[] {
             150,
@@ -117,7 +123,8 @@
             // 
             // numericUpDownSpeed
             // 
-            this.numericUpDownSpeed.Location = new System.Drawing.Point(437, 51);
+            this.numericUpDownSpeed.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericUpDownSpeed.Location = new System.Drawing.Point(465, 67);
             this.numericUpDownSpeed.Maximum = new decimal(new int[] {
             500,
             0,
@@ -129,23 +136,25 @@
             0,
             0});
             this.numericUpDownSpeed.Name = "numericUpDownSpeed";
-            this.numericUpDownSpeed.Size = new System.Drawing.Size(68, 20);
+            this.numericUpDownSpeed.Size = new System.Drawing.Size(188, 46);
             this.numericUpDownSpeed.TabIndex = 6;
             this.numericUpDownSpeed.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
+            this.numericUpDownSpeed.ValueChanged += new System.EventHandler(this.numericUpDownSpeed_ValueChanged);
             // 
             // numericUpDownStep
             // 
             this.numericUpDownStep.DecimalPlaces = 2;
+            this.numericUpDownStep.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numericUpDownStep.Increment = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDownStep.Location = new System.Drawing.Point(437, 130);
+            this.numericUpDownStep.Location = new System.Drawing.Point(465, 119);
             this.numericUpDownStep.Maximum = new decimal(new int[] {
             50,
             0,
@@ -157,7 +166,7 @@
             0,
             65536});
             this.numericUpDownStep.Name = "numericUpDownStep";
-            this.numericUpDownStep.Size = new System.Drawing.Size(68, 20);
+            this.numericUpDownStep.Size = new System.Drawing.Size(188, 46);
             this.numericUpDownStep.TabIndex = 7;
             this.numericUpDownStep.Value = new decimal(new int[] {
             1,
@@ -169,25 +178,27 @@
             // numericUpDownRetire
             // 
             this.numericUpDownRetire.DecimalPlaces = 2;
+            this.numericUpDownRetire.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numericUpDownRetire.Increment = new decimal(new int[] {
             5,
             0,
             0,
             65536});
-            this.numericUpDownRetire.Location = new System.Drawing.Point(437, 202);
+            this.numericUpDownRetire.Location = new System.Drawing.Point(465, 171);
             this.numericUpDownRetire.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numericUpDownRetire.Name = "numericUpDownRetire";
-            this.numericUpDownRetire.Size = new System.Drawing.Size(68, 20);
+            this.numericUpDownRetire.Size = new System.Drawing.Size(188, 46);
             this.numericUpDownRetire.TabIndex = 8;
             this.numericUpDownRetire.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
+            this.numericUpDownRetire.ValueChanged += new System.EventHandler(this.numericUpDownRetire_ValueChanged);
             // 
             // groupBox1
             // 
@@ -200,18 +211,20 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.numericUpDownRadius);
             this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(517, 251);
+            this.groupBox1.Size = new System.Drawing.Size(685, 276);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Параметры сканирования";
             // 
             // buttonCreateTap
             // 
-            this.buttonCreateTap.Location = new System.Drawing.Point(12, 269);
+            this.buttonCreateTap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCreateTap.Location = new System.Drawing.Point(12, 294);
             this.buttonCreateTap.Name = "buttonCreateTap";
-            this.buttonCreateTap.Size = new System.Drawing.Size(170, 23);
+            this.buttonCreateTap.Size = new System.Drawing.Size(226, 48);
             this.buttonCreateTap.TabIndex = 10;
             this.buttonCreateTap.Text = "Создать код сканирования";
             this.buttonCreateTap.UseVisualStyleBackColor = true;
@@ -219,9 +232,10 @@
             // 
             // buttonConvert
             // 
-            this.buttonConvert.Location = new System.Drawing.Point(188, 269);
+            this.buttonConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonConvert.Location = new System.Drawing.Point(244, 294);
             this.buttonConvert.Name = "buttonConvert";
-            this.buttonConvert.Size = new System.Drawing.Size(186, 23);
+            this.buttonConvert.Size = new System.Drawing.Size(241, 48);
             this.buttonConvert.TabIndex = 11;
             this.buttonConvert.Text = "Конвертировать облако точек";
             this.buttonConvert.UseVisualStyleBackColor = true;
@@ -230,18 +244,30 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 308);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(12, 356);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(388, 13);
+            this.label5.Size = new System.Drawing.Size(416, 17);
             this.label5.TabIndex = 12;
-            this.label5.Text = "Американская фирма \"Транссептор технолоджи\" 2015 год. Штат Мичиган.";
+            this.label5.Text = "ООО \"Незабываемые Системы Автоматизации\" Москва. 2016";
+            // 
+            // buttonFixReturn
+            // 
+            this.buttonFixReturn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonFixReturn.Location = new System.Drawing.Point(491, 294);
+            this.buttonFixReturn.Name = "buttonFixReturn";
+            this.buttonFixReturn.Size = new System.Drawing.Size(206, 48);
+            this.buttonFixReturn.TabIndex = 13;
+            this.buttonFixReturn.Text = "Исправить возврат";
+            this.buttonFixReturn.UseVisualStyleBackColor = true;
+            this.buttonFixReturn.Click += new System.EventHandler(this.buttonFixReturn_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.ErrorImage = null;
             this.pictureBox1.Image = global::Horizon_A3_2.Properties.Resources.picture;
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 19);
+            this.pictureBox1.Location = new System.Drawing.Point(6, 35);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(267, 226);
             this.pictureBox1.TabIndex = 0;
@@ -251,15 +277,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 333);
+            this.ClientSize = new System.Drawing.Size(709, 382);
+            this.Controls.Add(this.buttonFixReturn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.buttonConvert);
             this.Controls.Add(this.buttonCreateTap);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Супер полировка дисков";
+            this.Text = "Полировка дисков";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRadius)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStep)).EndInit();
@@ -287,6 +315,7 @@
         private System.Windows.Forms.Button buttonCreateTap;
         private System.Windows.Forms.Button buttonConvert;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button buttonFixReturn;
     }
 }
 
