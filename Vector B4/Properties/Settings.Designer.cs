@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Horizon_A3_2.Properties {
+namespace Vector_B4.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

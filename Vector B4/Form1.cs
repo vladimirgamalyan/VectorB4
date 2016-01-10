@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Horizon_A3_2
+namespace Vector_B4
 {
     public partial class Form1 : Form
     {
@@ -40,7 +40,7 @@ namespace Horizon_A3_2
 
                 do {
 
-                    file.WriteLine("G31X20");
+                    file.WriteLine("G31X-20");
                     file.WriteLine("G0X" + retire.ToString("0.##"));
                     file.WriteLine("G0Y" + step.ToString("0.##"));
 

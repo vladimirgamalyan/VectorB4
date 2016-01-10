@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Horizon_A3_2
+namespace Vector_B4
 {
     static class Program
     {

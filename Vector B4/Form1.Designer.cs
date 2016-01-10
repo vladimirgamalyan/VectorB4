@@ -1,4 +1,4 @@
-﻿namespace Horizon_A3_2
+﻿namespace Vector_B4
 {
     partial class Form1
     {
@@ -265,7 +265,7 @@
             // pictureBox1
             // 
             this.pictureBox1.ErrorImage = null;
-            this.pictureBox1.Image = global::Horizon_A3_2.Properties.Resources.picture;
+            this.pictureBox1.Image = global::Vector_B4.Properties.Resources.picture;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(6, 35);
             this.pictureBox1.Name = "pictureBox1";
