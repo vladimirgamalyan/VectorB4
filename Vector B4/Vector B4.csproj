@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app-ico.ico" />
+    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
