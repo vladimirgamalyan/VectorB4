@@ -70,5 +70,29 @@ namespace Vector_B4.Properties {
                 this["SettingRetire"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal SettingRepeats {
+            get {
+                return ((decimal)(this["SettingRepeats"]));
+            }
+            set {
+                this["SettingRepeats"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.05")]
+        public decimal SettingRepeatStep {
+            get {
+                return ((decimal)(this["SettingRepeatStep"]));
+            }
+            set {
+                this["SettingRepeatStep"] = value;
+            }
+        }
     }
 }

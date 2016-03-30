@@ -46,8 +46,8 @@
             this.numericUpDownRepeats = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownRepeatStep = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRadius)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStep)).BeginInit();
@@ -299,7 +299,7 @@
             0,
             0,
             0});
-            this.numericUpDownRepeats.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDownRepeats.ValueChanged += new System.EventHandler(this.numericUpDownRepeats_ValueChanged);
             // 
             // numericUpDownRepeatStep
             // 
@@ -329,6 +329,7 @@
             0,
             0,
             131072});
+            this.numericUpDownRepeatStep.ValueChanged += new System.EventHandler(this.numericUpDownRepeatStep_ValueChanged);
             // 
             // groupBox2
             // 
@@ -346,16 +347,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Конвертер";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(52, 22);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(66, 17);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Повторы";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -365,6 +356,16 @@
             this.label7.Size = new System.Drawing.Size(109, 17);
             this.label7.TabIndex = 17;
             this.label7.Text = "Смещение (мм)";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(52, 22);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 17);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Повторы";
             // 
             // FormMain
             // 

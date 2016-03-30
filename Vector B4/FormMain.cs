@@ -210,6 +210,8 @@ namespace Vector_B4
             this.numericUpDownSpeed.Value = Properties.Settings.Default.SettingSpeed;
             this.numericUpDownStep.Value = Properties.Settings.Default.SettingStep;
             this.numericUpDownRetire.Value = Properties.Settings.Default.SettingRetire;
+            this.numericUpDownRepeats.Value = Properties.Settings.Default.SettingRepeats;
+            this.numericUpDownRepeatStep.Value = Properties.Settings.Default.SettingRepeatStep;
             onLoadSettingFlag = false;
         }
 
@@ -221,6 +223,8 @@ namespace Vector_B4
             Properties.Settings.Default["SettingSpeed"] = this.numericUpDownSpeed.Value;
             Properties.Settings.Default["SettingStep"] = this.numericUpDownStep.Value;
             Properties.Settings.Default["SettingRetire"] = this.numericUpDownRetire.Value;
+            Properties.Settings.Default["SettingRepeats"] = this.numericUpDownRepeats.Value;
+            Properties.Settings.Default["SettingRepeatStep"] = this.numericUpDownRepeatStep.Value;
             Properties.Settings.Default.Save();
         }
 
@@ -252,9 +256,14 @@ namespace Vector_B4
             saveFormValues();
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void numericUpDownRepeats_ValueChanged(object sender, EventArgs e)
         {
+            saveFormValues();
+        }
 
+        private void numericUpDownRepeatStep_ValueChanged(object sender, EventArgs e)
+        {
+            saveFormValues();
         }
     }
 }
