@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -107,38 +108,97 @@ namespace Vector_B4
             }
         }
 
-        private void buttonFixReturn_Click(object sender, EventArgs e)
+        private List<string> shiftProgram(List<string> lines, decimal shift)
         {
-            // Корректируем файл, чтобы при возврате резец не задел диск.
+            var result = new List<string>();
 
-            string tempLineValue;
-            List<string> result = new List<string>();
-            using (FileStream inputStream = File.OpenRead("G-Code.tap"))
+            /*
+                Проходим по всем строкам, и если находим значение X, то корректируем его.
+
+            */
+
+            foreach (string line in lines)
             {
-                using (StreamReader inputReader = new StreamReader(inputStream))
+                string pattern = @"(X\d+\.\d+)";
+                string[] lineParts = Regex.Split(line, pattern);
+
+                for (int i = 0; i < lineParts.Length; ++i)
                 {
-                    while (null != (tempLineValue = inputReader.ReadLine()))
+                    if (lineParts[i].StartsWith("X"))
                     {
-                        if (tempLineValue == "G0X0.000Y0.000")
-                        {
-                            result.Add("G0X0");
-                            result.Add("G0Y0");
-                        }
-                        else
-                        {
-                            result.Add(tempLineValue);
-                        }
+                        string valueString = lineParts[i].Substring(1);
+                        decimal value = decimal.Parse(valueString, CultureInfo.InvariantCulture);
+                        value += shift;
+
+                        NumberFormatInfo nfi = new NumberFormatInfo();
+                        nfi.NumberDecimalSeparator = ".";
+                        nfi.NumberGroupSeparator = "";
+
+                        lineParts[i] = "X" + value.ToString(nfi);
                     }
                 }
+
+                result.Add(String.Join("", lineParts));
             }
 
-            using (StreamWriter outputWriter = new StreamWriter("G-Code.tap"))
+            return result;
+        }
+
+        private void buttonFixReturn_Click(object sender, EventArgs e)
+        {
+            const string FileName = "G-Code.tap";
+
+            List<string> lines = File.ReadLines(FileName).ToList();
+
+            // корректируем программу так, чтобы при возврате резец не задел диск
+            List<string> linesCorrected = new List<string>();
+            foreach (string line in lines)
             {
-                foreach (string s in result)
+                if (line == "G0X0.000Y0.000")
                 {
-                    outputWriter.WriteLine(s);
+                    linesCorrected.Add("G0X0");
+                    linesCorrected.Add("G0Y0");
+                }
+                else
+                {
+                    linesCorrected.Add(line);
                 }
             }
+
+
+            // теперь делаем повторы
+
+            List<string> linesResult = new List<string>();
+            List<string> linesProgramBody = new List<string>();
+
+            bool programBody = false;
+            foreach (string line in lines)
+            {
+                if (line.Contains("M30"))
+                    break;
+
+                if (programBody)
+                    linesProgramBody.Add(line);
+                else
+                    linesResult.Add(line);
+
+                if (line.Contains("M3"))
+                    programBody = true;
+            }
+
+            int repeats = (int) numericUpDownRepeats.Value;
+            decimal repeatStep = this.numericUpDownRepeatStep.Value;
+
+            for (int i = 0; i < repeats; ++i)
+            {
+                linesResult.Add(String.Format("(* цикл {0} из {1} *)", i + 1, repeats));
+                linesResult.AddRange(shiftProgram(linesProgramBody, repeatStep * i));
+            }
+
+            linesResult.Add("M30");
+
+            //File.WriteAllLines(FileName, linesResult);
+            File.WriteAllLines("test.txt", linesResult);
         }
 
         private bool onLoadSettingFlag = false;
@@ -190,6 +250,11 @@ namespace Vector_B4
         private void numericUpDownRetire_ValueChanged(object sender, EventArgs e)
         {
             saveFormValues();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

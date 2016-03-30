@@ -5,3 +5,22 @@
 	- читает файл "oblako T" (полученый после сканирования диска) и создает из него файл "LINE.dxf", представляющий контур диска;
 "Исправить возврат"
 	- изменяет в файле G-Code.tap операцию возврата резца, так, чтобы он не задевал диск.
+
+Описание формата .tap файла:
+https://en.wikipedia.org/wiki/G-code
+
+Для визуализации можно использовать например jViewer http://www.thingiverse.com/thing:72324
+
+T		Tool selection
+M		Miscellaneous (M00 - Compulsory stop, M3 - Spindle On, M30 - End of Program)
+G		Address for preparatory commands (G0 - Rapid Positioning - быстрое перемещение в позицию, G1 - перемещение
+по прямой линии)
+F		Feed Rate
+S		Speed
+X,Y,Z	Coordinates
+
+Действие большинства G-кодов сохраняется, например:
+G1 X74.904 Y230.928 F240.0
+X45.400 Y239.700
+X42.000 Y232.100
+для второй и третей строки будет использовать G1 и F240
