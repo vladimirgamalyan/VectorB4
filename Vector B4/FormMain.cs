@@ -119,7 +119,7 @@ namespace Vector_B4
 
             foreach (string line in lines)
             {
-                string pattern = @"(X\d+\.\d+)";
+                string pattern = @"(X-?\d+\.\d+)";
                 string[] lineParts = Regex.Split(line, pattern);
 
                 for (int i = 0; i < lineParts.Length; ++i)
@@ -127,14 +127,21 @@ namespace Vector_B4
                     if (lineParts[i].StartsWith("X"))
                     {
                         string valueString = lineParts[i].Substring(1);
-                        decimal value = decimal.Parse(valueString, CultureInfo.InvariantCulture);
-                        value += shift;
+                        try
+                        {
+                            decimal value = decimal.Parse(valueString, CultureInfo.InvariantCulture);
+                            value -= shift;
 
-                        NumberFormatInfo nfi = new NumberFormatInfo();
-                        nfi.NumberDecimalSeparator = ".";
-                        nfi.NumberGroupSeparator = "";
+                            NumberFormatInfo nfi = new NumberFormatInfo();
+                            nfi.NumberDecimalSeparator = ".";
+                            nfi.NumberGroupSeparator = "";
 
-                        lineParts[i] = "X" + value.ToString(nfi);
+                            lineParts[i] = "X" + value.ToString(nfi);
+                        }
+                        catch (FormatException)
+                        {
+                            throw new Exception(String.Format("Unable to parse {0}.", valueString));
+                        }
                     }
                 }
 
@@ -197,8 +204,11 @@ namespace Vector_B4
 
             linesResult.Add("M30");
 
-            //File.WriteAllLines(FileName, linesResult);
+#if DEBUG
             File.WriteAllLines("test.txt", linesResult);
+#else
+            File.WriteAllLines(FileName, linesResult);
+#endif
         }
 
         private bool onLoadSettingFlag = false;

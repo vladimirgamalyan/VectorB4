@@ -134,7 +134,7 @@
             this.numericUpDownSpeed.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numericUpDownSpeed.Location = new System.Drawing.Point(465, 67);
             this.numericUpDownSpeed.Maximum = new decimal(new int[] {
-            500,
+            900,
             0,
             0,
             0});
@@ -286,6 +286,11 @@
             // 
             this.numericUpDownRepeats.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numericUpDownRepeats.Location = new System.Drawing.Point(124, 22);
+            this.numericUpDownRepeats.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numericUpDownRepeats.Minimum = new decimal(new int[] {
             1,
             0,
@@ -306,18 +311,18 @@
             this.numericUpDownRepeatStep.DecimalPlaces = 2;
             this.numericUpDownRepeatStep.Font = new System.Drawing.Font("Verdana", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numericUpDownRepeatStep.Increment = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
             131072});
             this.numericUpDownRepeatStep.Location = new System.Drawing.Point(124, 74);
             this.numericUpDownRepeatStep.Maximum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
             this.numericUpDownRepeatStep.Minimum = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
             131072});
