@@ -179,7 +179,7 @@ namespace Vector_B4
             List<string> linesProgramBody = new List<string>();
 
             bool programBody = false;
-            foreach (string line in lines)
+            foreach (string line in linesCorrected)
             {
                 if (line.Contains("M30"))
                     break;
@@ -207,7 +207,7 @@ namespace Vector_B4
 #if DEBUG
             File.WriteAllLines("test.txt", linesResult);
 #else
-            File.WriteAllLines(FileName, linesResult);
+            File.WriteAllLines(FileName, linesResult, Encoding.GetEncoding("Windows-1251"));
 #endif
         }
 
