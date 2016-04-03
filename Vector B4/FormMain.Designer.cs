@@ -267,9 +267,9 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(9, 438);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(416, 17);
+            this.label5.Size = new System.Drawing.Size(570, 17);
             this.label5.TabIndex = 12;
-            this.label5.Text = "ООО \"Незабываемые Системы Автоматизации\" Москва. 2016";
+            this.label5.Text = "ООО \"Незабываемые Системы Автоматизации\" по заказу \"Mirror Disk\". Москва. 2016";
             // 
             // buttonFixReturn
             // 

@@ -117,6 +117,8 @@ namespace Vector_B4
 
             */
 
+            bool changed = false;
+
             foreach (string line in lines)
             {
                 string pattern = @"(X-?\d+\.\d+)";
@@ -131,6 +133,7 @@ namespace Vector_B4
                         {
                             decimal value = decimal.Parse(valueString, CultureInfo.InvariantCulture);
                             value -= shift;
+                            changed = true;
 
                             NumberFormatInfo nfi = new NumberFormatInfo();
                             nfi.NumberDecimalSeparator = ".";
@@ -147,6 +150,9 @@ namespace Vector_B4
 
                 result.Add(String.Join("", lineParts));
             }
+
+            if (!changed)
+                throw new Exception("nothing to shift in loop");
 
             return result;
         }
@@ -199,7 +205,10 @@ namespace Vector_B4
             for (int i = 0; i < repeats; ++i)
             {
                 linesResult.Add(String.Format("(* цикл {0} из {1} *)", i + 1, repeats));
-                linesResult.AddRange(shiftProgram(linesProgramBody, repeatStep * i));
+                if (i > 0)
+                    linesResult.AddRange(shiftProgram(linesProgramBody, repeatStep * i));
+                else
+                    linesResult.AddRange(linesProgramBody);
             }
 
             linesResult.Add("M30");
