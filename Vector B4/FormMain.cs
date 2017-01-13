@@ -37,6 +37,7 @@ namespace Vector_B4
                 file.WriteLine("F" + speed.ToString("0.##"));
                 file.WriteLine("(установите щуп у края диска, затем нажмите СТАРТ!*)");
                 file.WriteLine("M00");
+                file.WriteLine("M08");
                 file.WriteLine("G91");
 
                 do {
