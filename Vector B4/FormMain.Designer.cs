@@ -257,7 +257,7 @@
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(188, 48);
             this.buttonConvert.TabIndex = 11;
-            this.buttonConvert.Text = "Конвертировать облако точек";
+            this.buttonConvert.Text = "Конвертировать облако точек (oblako T.txt)";
             this.buttonConvert.UseVisualStyleBackColor = true;
             this.buttonConvert.Click += new System.EventHandler(this.buttonConvert_Click);
             // 
@@ -267,9 +267,10 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(9, 438);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(465, 17);
+            this.label5.Size = new System.Drawing.Size(599, 17);
             this.label5.TabIndex = 12;
-            this.label5.Text = "ООО \"Системы Автоматизации\" по заказу \"Mirror Disk\". Москва. 2017";
+            this.label5.Text = "ООО \"Системы Автоматизации\" по заказу \"Mirror Disk\". Москва. 2021. Версия для mac" +
+    "h4.";
             // 
             // buttonFixReturn
             // 
@@ -351,6 +352,7 @@
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Конвертер";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // label7
             // 
@@ -385,6 +387,7 @@
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "Полировка дисков";
+            this.Load += new System.EventHandler(this.FormMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRadius)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStep)).EndInit();

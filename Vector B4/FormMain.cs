@@ -32,11 +32,11 @@ namespace Vector_B4
 
                 decimal currentRadius = 0;
 
-                file.WriteLine("(*** сканирование ***)");
+                file.WriteLine("(*** scaning ***)");
                 file.WriteLine("M40");
                 file.WriteLine("F" + speed.ToString("0.##"));
                 file.WriteLine("M08");
-                file.WriteLine("(установите щуп у края диска, затем нажмите СТАРТ!*)");
+                file.WriteLine("(* ustanovite shuo ukrya diska i najmite start *)");
                 file.WriteLine("M00");
                 file.WriteLine("G91");
 
@@ -52,19 +52,19 @@ namespace Vector_B4
                 file.WriteLine("G90");
                 file.WriteLine("G0X0");
                 file.WriteLine("G0Y0");
-                file.WriteLine("(* сканирование сохранить как:\"oblako T\" !!! *)");
+                file.WriteLine("(* skanirovanie sohranit kak:\"oblako T.txt\" !!! *)");
                 file.WriteLine("M30");
             }
         }
 
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            // Читаем файл "oblako T" , парсим его и создаем файл "LINE.dxf".
+            // Читаем файл "oblako T.txt" , парсим его и создаем файл "LINE.dxf".
 
             try
             {
                 string line;
-                using (System.IO.StreamReader srcFile = new System.IO.StreamReader("oblako T"))
+                using (System.IO.StreamReader srcFile = new System.IO.StreamReader("oblako T.txt"))
                 {
                     using (System.IO.StreamWriter dstFile = new System.IO.StreamWriter("LINE.dxf"))
                     {
@@ -79,7 +79,15 @@ namespace Vector_B4
 
                         while ((line = srcFile.ReadLine()) != null)
                         {
-                            string[] values = line.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                            //string[] values = line.Split(',').Select(sValue => sValue.Trim()).ToArray();
+
+                            // Mach4 version
+                            string[] values = line.Split(' ').Select(sValue => sValue.Trim().Substring(1)).ToArray();
+
+                            foreach (var item in values)
+                            {
+                                Console.WriteLine(item.ToString());
+                            }
 
                             dstFile.WriteLine("  0");
                             dstFile.WriteLine("VERTEX");
@@ -205,13 +213,14 @@ namespace Vector_B4
 
             for (int i = 0; i < repeats; ++i)
             {
-                linesResult.Add(String.Format("(* цикл {0} из {1} *)", i + 1, repeats));
+                linesResult.Add(String.Format("(* cicl {0} iz {1} *)", i + 1, repeats));
                 if (i > 0)
                     linesResult.AddRange(shiftProgram(linesProgramBody, repeatStep * i));
                 else
                     linesResult.AddRange(linesProgramBody);
             }
 
+            linesResult.Add("M05"); // mach4
             linesResult.Add("M30");
 
 #if DEBUG
@@ -284,6 +293,16 @@ namespace Vector_B4
         private void numericUpDownRepeatStep_ValueChanged(object sender, EventArgs e)
         {
             saveFormValues();
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
