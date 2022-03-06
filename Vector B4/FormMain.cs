@@ -32,9 +32,11 @@ namespace Vector_B4
 
                 decimal currentRadius = 0;
 
+                NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
+
                 file.WriteLine("(*** scaning ***)");
                 file.WriteLine("M40");
-                file.WriteLine("F" + speed.ToString("0.##"));
+                file.WriteLine("F" + speed.ToString("0.##", nfi));
                 file.WriteLine("M08");
                 file.WriteLine("(* ustanovite shuo ukrya diska i najmite start *)");
                 file.WriteLine("M00");
@@ -43,8 +45,8 @@ namespace Vector_B4
                 do {
 
                     file.WriteLine("G31X-20");
-                    file.WriteLine("G0X" + retire.ToString("0.##"));
-                    file.WriteLine("G0Y" + step.ToString("0.##"));
+                    file.WriteLine("G0X" + retire.ToString("0.##", nfi));
+                    file.WriteLine("G0Y" + step.ToString("0.##", nfi));
 
                     currentRadius += step;
                 } while (currentRadius <= radius);
