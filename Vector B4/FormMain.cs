@@ -38,35 +38,40 @@ namespace Vector_B4
                 file.WriteLine("M40");
                 file.WriteLine("F" + speed.ToString("0.##", nfi));
                 file.WriteLine("M08");
-                file.WriteLine("(* ustanovite shuo ukrya diska i najmite start *)");
+                file.WriteLine("(* ustanovite shup u kraya diska i najmite start *)");
                 file.WriteLine("M00");
                 file.WriteLine("G91");
 
                 do {
 
-                    file.WriteLine("G31X-20");
-                    file.WriteLine("G0X" + retire.ToString("0.##", nfi));
-                    file.WriteLine("G0Y" + step.ToString("0.##", nfi));
+                    //file.WriteLine("G31X-20");
+                    //file.WriteLine("G0X" + retire.ToString("0.##", nfi));
+                    //file.WriteLine("G0Y" + step.ToString("0.##", nfi));
+
+                    // X <-> Y
+                    file.WriteLine("G31Y-20");
+                    file.WriteLine("G0Y" + retire.ToString("0.##", nfi));
+                    file.WriteLine("G0X-" + step.ToString("0.##", nfi));
 
                     currentRadius += step;
                 } while (currentRadius <= radius);
 
                 file.WriteLine("G90");
-                file.WriteLine("G0X0");
                 file.WriteLine("G0Y0");
-                file.WriteLine("(* skanirovanie sohranit kak:\"oblako T.txt\" !!! *)");
+                file.WriteLine("G0X0");
+                file.WriteLine("(* skanirovanie sohranit kak:\"oblako T.tap\" !!! *)");
                 file.WriteLine("M30");
             }
         }
 
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            // Читаем файл "oblako T.txt" , парсим его и создаем файл "LINE.dxf".
+            // Читаем файл "oblako T.txt", парсим его и создаем файл "LINE.dxf".
 
             try
             {
                 string line;
-                using (System.IO.StreamReader srcFile = new System.IO.StreamReader("oblako T.txt"))
+                using (System.IO.StreamReader srcFile = new System.IO.StreamReader("oblako T"))
                 {
                     using (System.IO.StreamWriter dstFile = new System.IO.StreamWriter("LINE.dxf"))
                     {
@@ -81,10 +86,11 @@ namespace Vector_B4
 
                         while ((line = srcFile.ReadLine()) != null)
                         {
-                            //string[] values = line.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                            // Mach3 version, строки вида: 77.01367,129.99375,0.00000
+                            string[] values = line.Split(',').Select(sValue => sValue.Trim()).ToArray();
 
-                            // Mach4 version
-                            string[] values = line.Split(' ').Select(sValue => sValue.Trim().Substring(1)).ToArray();
+                            // Mach4 version, строки вида: X-6.0670 Y0.0000 Z0.0000
+                            //string[] values = line.Split(' ').Select(sValue => sValue.Trim().Substring(1)).ToArray();
 
                             foreach (var item in values)
                             {
@@ -137,7 +143,7 @@ namespace Vector_B4
 
                 for (int i = 0; i < lineParts.Length; ++i)
                 {
-                    if (lineParts[i].StartsWith("X"))
+                    if (lineParts[i].StartsWith("Y"))
                     {
                         string valueString = lineParts[i].Substring(1);
                         try
@@ -150,7 +156,7 @@ namespace Vector_B4
                             nfi.NumberDecimalSeparator = ".";
                             nfi.NumberGroupSeparator = "";
 
-                            lineParts[i] = "X" + value.ToString(nfi);
+                            lineParts[i] = "Y" + value.ToString(nfi);
                         }
                         catch (FormatException)
                         {
@@ -180,8 +186,8 @@ namespace Vector_B4
             {
                 if (line == "G0X0.000Y0.000")
                 {
-                    linesCorrected.Add("G0X0");
                     linesCorrected.Add("G0Y0");
+                    linesCorrected.Add("G0X0");
                 }
                 else
                 {
