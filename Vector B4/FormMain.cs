@@ -23,219 +23,97 @@ namespace Vector_B4
 
         private void buttonCreateTap_Click(object sender, EventArgs e)
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"scaner.tap", false, Encoding.GetEncoding("Windows-1251")))
+            var generator = new ScannerGenerator();
+            var parameters = new ScannerGenerator.TapParameters
             {
-                decimal radius = this.numericUpDownRadius.Value;
-                decimal speed = this.numericUpDownSpeed.Value;
-                decimal step = this.numericUpDownStep.Value;
-                decimal retire = this.numericUpDownRetire.Value;
+                OutputPath = Properties.Settings.Default.OutputScanerFile,
+                Radius = numericUpDownRadius.Value,
+                Speed = numericUpDownSpeed.Value,
+                Step = numericUpDownStep.Value,
+                Retire = numericUpDownRetire.Value,
+                Orientation = AppConfig.Instance.Orientation,
+                InputOblakoFile = Properties.Settings.Default.InputOblakoFile
+            };
 
-                decimal currentRadius = 0;
-
-                NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
-
-                file.WriteLine("(*** scaning ***)");
-                file.WriteLine("M40");
-                file.WriteLine("F" + speed.ToString("0.##", nfi));
-                file.WriteLine("M08");
-                file.WriteLine("(* ustanovite shup u kraya diska i najmite start *)");
-                file.WriteLine("M00");
-                file.WriteLine("G91");
-
-                do {
-
-                    //file.WriteLine("G31X-20");
-                    //file.WriteLine("G0X" + retire.ToString("0.##", nfi));
-                    //file.WriteLine("G0Y" + step.ToString("0.##", nfi));
-
-                    // X <-> Y
-                    file.WriteLine("G31Y-20");
-                    file.WriteLine("G0Y" + retire.ToString("0.##", nfi));
-                    file.WriteLine("G0X-" + step.ToString("0.##", nfi));
-
-                    currentRadius += step;
-                } while (currentRadius <= radius);
-
-                file.WriteLine("G90");
-                file.WriteLine("G0Y0");
-                file.WriteLine("G0X0");
-                file.WriteLine("(* skanirovanie sohranit kak:\"oblako T.tap\" !!! *)");
-                file.WriteLine("M30");
+            try
+            {
+                generator.Generate(parameters);
+                MessageBox.Show($"Файл {parameters.OutputPath} успешно создан.", "Готово", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка генерации: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            // Читаем файл "oblako T.txt", парсим его и создаем файл "LINE.dxf".
+            string sourceFileName = Properties.Settings.Default.InputOblakoFile;
+            if (!File.Exists(sourceFileName))
+            {
+                ShowError("Файл не найден: " + sourceFileName);
+                return;
+            }
+
+            var converter = new OblakoToDxfConverter();
+            var parameters = new OblakoToDxfConverter.ConvertParameters
+            {
+                InputFile = Properties.Settings.Default.InputOblakoFile,
+                OutputFile = Properties.Settings.Default.OutputDXFFile,
+                Format = AppConfig.Instance.Format
+            };
 
             try
             {
-                string line;
-                using (System.IO.StreamReader srcFile = new System.IO.StreamReader("oblako T"))
-                {
-                    using (System.IO.StreamWriter dstFile = new System.IO.StreamWriter("LINE.dxf"))
-                    {
-                        dstFile.WriteLine("0");
-                        dstFile.WriteLine("SECTION");
-                        dstFile.WriteLine("  2");
-                        dstFile.WriteLine("ENTITIES");
-                        dstFile.WriteLine("  0");
-                        dstFile.WriteLine("POLYLINE");
-                        dstFile.WriteLine("  8");
-                        dstFile.WriteLine("");
-
-                        while ((line = srcFile.ReadLine()) != null)
-                        {
-                            // Mach3 version, строки вида: 77.01367,129.99375,0.00000
-                            string[] values = line.Split(',').Select(sValue => sValue.Trim()).ToArray();
-
-                            // Mach4 version, строки вида: X-6.0670 Y0.0000 Z0.0000
-                            //string[] values = line.Split(' ').Select(sValue => sValue.Trim().Substring(1)).ToArray();
-
-                            foreach (var item in values)
-                            {
-                                Console.WriteLine(item.ToString());
-                            }
-
-                            dstFile.WriteLine("  0");
-                            dstFile.WriteLine("VERTEX");
-                            dstFile.WriteLine("  8");
-                            dstFile.WriteLine("0");
-                            dstFile.WriteLine(" 10");
-                            dstFile.WriteLine(values[0]);
-                            dstFile.WriteLine(" 20");
-                            dstFile.WriteLine(values[1]);
-                            dstFile.WriteLine(" 30");
-                            dstFile.WriteLine(values[2]);
-                            dstFile.WriteLine(" 70");
-                            dstFile.WriteLine("    32");
-                        }
-
-                        dstFile.WriteLine("  0");
-                        dstFile.WriteLine("SEQEND");
-                        dstFile.WriteLine("  0");
-                        dstFile.WriteLine("ENDSEC");
-                        dstFile.WriteLine("  0");
-                        dstFile.WriteLine("EOF");
-                    }
-                }
+                converter.Convert(parameters);
+                MessageBox.Show($"Файл {parameters.OutputFile} успешно создан.", "Готово",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch
+            catch (Exception ex)
             {
+                ShowError("Ошибка конвертации: " + ex.Message);
             }
         }
 
-        private List<string> shiftProgram(List<string> lines, decimal shift)
+        private void ShowError(string msg)
         {
-            var result = new List<string>();
-
-            /*
-                Проходим по всем строкам, и если находим значение X, то корректируем его.
-
-            */
-
-            bool changed = false;
-
-            foreach (string line in lines)
-            {
-                string pattern = @"(X-?\d+\.\d+)";
-                string[] lineParts = Regex.Split(line, pattern);
-
-                for (int i = 0; i < lineParts.Length; ++i)
-                {
-                    if (lineParts[i].StartsWith("Y"))
-                    {
-                        string valueString = lineParts[i].Substring(1);
-                        try
-                        {
-                            decimal value = decimal.Parse(valueString, CultureInfo.InvariantCulture);
-                            value -= shift;
-                            changed = true;
-
-                            NumberFormatInfo nfi = new NumberFormatInfo();
-                            nfi.NumberDecimalSeparator = ".";
-                            nfi.NumberGroupSeparator = "";
-
-                            lineParts[i] = "Y" + value.ToString(nfi);
-                        }
-                        catch (FormatException)
-                        {
-                            throw new Exception(String.Format("Unable to parse {0}.", valueString));
-                        }
-                    }
-                }
-
-                result.Add(String.Join("", lineParts));
-            }
-
-            if (!changed)
-                throw new Exception("nothing to shift in loop");
-
-            return result;
+            MessageBox.Show(
+                msg,
+                "Ошибка вилезла",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
         }
 
         private void buttonFixReturn_Click(object sender, EventArgs e)
         {
-            const string FileName = "G-Code.tap";
-
-            List<string> lines = File.ReadLines(FileName).ToList();
-
-            // корректируем программу так, чтобы при возврате резец не задел диск
-            List<string> linesCorrected = new List<string>();
-            foreach (string line in lines)
+            string fileName = Properties.Settings.Default.InputGCodeTapFile;
+            if (!File.Exists(fileName))
             {
-                if (line == "G0X0.000Y0.000")
-                {
-                    linesCorrected.Add("G0Y0");
-                    linesCorrected.Add("G0X0");
-                }
-                else
-                {
-                    linesCorrected.Add(line);
-                }
+                ShowError("Файл не найден: " + fileName);
+                return;
             }
 
-
-            // теперь делаем повторы
-
-            List<string> linesResult = new List<string>();
-            List<string> linesProgramBody = new List<string>();
-
-            bool programBody = false;
-            foreach (string line in linesCorrected)
+            var fixer = new GCodeFixer();
+            var parameters = new GCodeFixer.FixParameters
             {
-                if (line.Contains("M30"))
-                    break;
+                InputFile = fileName,
+                Repeats = (int)numericUpDownRepeats.Value,
+                RepeatStep = numericUpDownRepeatStep.Value,
+                Format = AppConfig.Instance.Format,
+                Orientation = AppConfig.Instance.Orientation,
+                RepeatsMode = AppConfig.Instance.Repeats
+            };
 
-                if (programBody)
-                    linesProgramBody.Add(line);
-                else
-                    linesResult.Add(line);
-
-                if (line.Contains("M3"))
-                    programBody = true;
-            }
-
-            int repeats = (int) numericUpDownRepeats.Value;
-            decimal repeatStep = this.numericUpDownRepeatStep.Value;
-
-            for (int i = 0; i < repeats; ++i)
+            try
             {
-                linesResult.Add(String.Format("(* cicl {0} iz {1} *)", i + 1, repeats));
-                if (i > 0)
-                    linesResult.AddRange(shiftProgram(linesProgramBody, repeatStep * i));
-                else
-                    linesResult.AddRange(linesProgramBody);
+                fixer.Fix(parameters);
+                MessageBox.Show($"Файл {parameters.InputFile} успешно исправлен.", "Готово", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            linesResult.Add("M05"); // mach4
-            linesResult.Add("M30");
-
-#if DEBUG
-            File.WriteAllLines("test.txt", linesResult);
-#else
-            File.WriteAllLines(FileName, linesResult, Encoding.GetEncoding("Windows-1251"));
-#endif
+            catch (Exception ex)
+            {
+                ShowError($"Ошибка обработки файла {parameters.InputFile}: " + ex.Message);
+            }
         }
 
         private bool onLoadSettingFlag = false;
@@ -310,7 +188,26 @@ namespace Vector_B4
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            labelBottomLabelText.Text = Properties.Settings.Default.BottomLabelText;
+        }
 
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            using (var settingsForm = new FormConfig())
+            {
+                // Открываем как модальное окно
+                settingsForm.ShowDialog(this);
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close();
+                return true; // клавиша обработана
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

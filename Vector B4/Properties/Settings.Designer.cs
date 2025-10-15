@@ -12,7 +12,7 @@ namespace Vector_B4.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -92,6 +92,52 @@ namespace Vector_B4.Properties {
             }
             set {
                 this["SettingRepeatStep"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ООО \"Аум сим рикё\" и ПБОЮЛ \"Китеж\" по заказу от ООО \"Space X\" Калифорния. Москва." +
+            " 2026.")]
+        public string BottomLabelText {
+            get {
+                return ((string)(this["BottomLabelText"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("scaner.tap")]
+        public string OutputScanerFile {
+            get {
+                return ((string)(this["OutputScanerFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("oblako.txt")]
+        public string InputOblakoFile {
+            get {
+                return ((string)(this["InputOblakoFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("line.dxf")]
+        public string OutputDXFFile {
+            get {
+                return ((string)(this["OutputDXFFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("G-Code.tap")]
+        public string InputGCodeTapFile {
+            get {
+                return ((string)(this["InputGCodeTapFile"]));
             }
         }
     }

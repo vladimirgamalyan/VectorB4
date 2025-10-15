@@ -16,6 +16,7 @@ namespace Vector_B4
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            AppConfig.Load();
             Application.Run(new FormMain());
         }
     }

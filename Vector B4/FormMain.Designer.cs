@@ -41,13 +41,14 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonCreateTap = new System.Windows.Forms.Button();
             this.buttonConvert = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.labelBottomLabelText = new System.Windows.Forms.Label();
             this.buttonFixReturn = new System.Windows.Forms.Button();
             this.numericUpDownRepeats = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownRepeatStep = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.buttonSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRadius)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStep)).BeginInit();
@@ -257,20 +258,21 @@
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(188, 48);
             this.buttonConvert.TabIndex = 11;
-            this.buttonConvert.Text = "Конвертировать облако точек (oblako T.tap)";
+            this.buttonConvert.Text = "Конвертировать облако точек";
             this.buttonConvert.UseVisualStyleBackColor = true;
             this.buttonConvert.Click += new System.EventHandler(this.buttonConvert_Click);
             // 
-            // label5
+            // labelBottomLabelText
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(9, 438);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(691, 17);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "ООО \"Системы Автоматизации\" по заказу \"Zatonirui\". Москва. 2024. Версия для верти" +
-    "кального станка.";
+            this.labelBottomLabelText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelBottomLabelText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelBottomLabelText.Location = new System.Drawing.Point(12, 474);
+            this.labelBottomLabelText.Name = "labelBottomLabelText";
+            this.labelBottomLabelText.Size = new System.Drawing.Size(685, 17);
+            this.labelBottomLabelText.TabIndex = 12;
+            this.labelBottomLabelText.Text = "-";
+            this.labelBottomLabelText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonFixReturn
             // 
@@ -374,13 +376,24 @@
             this.label6.TabIndex = 16;
             this.label6.Text = "Повторы";
             // 
+            // buttonSettings
+            // 
+            this.buttonSettings.Location = new System.Drawing.Point(590, 441);
+            this.buttonSettings.Name = "buttonSettings";
+            this.buttonSettings.Size = new System.Drawing.Size(75, 23);
+            this.buttonSettings.TabIndex = 17;
+            this.buttonSettings.Text = "Настройки";
+            this.buttonSettings.UseVisualStyleBackColor = true;
+            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(709, 462);
+            this.ClientSize = new System.Drawing.Size(709, 500);
+            this.Controls.Add(this.buttonSettings);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.labelBottomLabelText);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -400,7 +413,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -418,13 +430,14 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button buttonCreateTap;
         private System.Windows.Forms.Button buttonConvert;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelBottomLabelText;
         private System.Windows.Forms.Button buttonFixReturn;
         private System.Windows.Forms.NumericUpDown numericUpDownRepeats;
         private System.Windows.Forms.NumericUpDown numericUpDownRepeatStep;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button buttonSettings;
     }
 }
 

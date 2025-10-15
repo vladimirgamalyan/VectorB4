@@ -20,5 +20,20 @@
     <Setting Name="SettingRepeatStep" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.05</Value>
     </Setting>
+    <Setting Name="BottomLabelText" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ООО "Аум сим рикё" и ПБОЮЛ "Китеж" по заказу от ООО "Space X" Калифорния. Москва. 2026.</Value>
+    </Setting>
+    <Setting Name="OutputScanerFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">scaner.tap</Value>
+    </Setting>
+    <Setting Name="InputOblakoFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">oblako.txt</Value>
+    </Setting>
+    <Setting Name="OutputDXFFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">line.dxf</Value>
+    </Setting>
+    <Setting Name="InputGCodeTapFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">G-Code.tap</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
