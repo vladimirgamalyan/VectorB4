@@ -7,8 +7,8 @@
     <ProjectGuid>{49067984-261D-4FAA-8A1F-3DC4B2185F72}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Vector_B4</RootNamespace>
-    <AssemblyName>Vector B4</AssemblyName>
+    <RootNamespace>VectorB4</RootNamespace>
+    <AssemblyName>VectorB4</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Vector_B4
+namespace VectorB4
 {
     public partial class FormConfig : Form
     {

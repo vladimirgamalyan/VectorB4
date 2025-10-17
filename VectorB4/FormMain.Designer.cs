@@ -1,4 +1,4 @@
-﻿namespace Vector_B4
+﻿namespace VectorB4
 {
     partial class FormMain
     {
@@ -232,7 +232,7 @@
             // pictureBox1
             // 
             this.pictureBox1.ErrorImage = null;
-            this.pictureBox1.Image = global::Vector_B4.Properties.Resources.picture;
+            this.pictureBox1.Image = global::VectorB4.Properties.Resources.picture;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(6, 35);
             this.pictureBox1.Name = "pictureBox1";

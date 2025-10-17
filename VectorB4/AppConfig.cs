@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Vector_B4
+namespace VectorB4
 {
     /// <summary>
     /// Основной конфигурационный класс приложения.

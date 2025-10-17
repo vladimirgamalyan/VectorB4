@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using static System.Windows.Forms.LinkLabel;
 
-namespace Vector_B4
+namespace VectorB4
 {
     /// <summary>
     /// Исправляет G-код после сканирования (возврат, повторы и т.п.).
@@ -16,7 +13,6 @@ namespace Vector_B4
     {
         public class FixParameters
         {
-            public string InputFile { get; set; }
             public int Repeats { get; set; }
             public decimal RepeatStep { get; set; }
             public AppConfig.FormatType Format { get; set; }
@@ -26,12 +22,11 @@ namespace Vector_B4
 
         private const string MarkerConverted = "( vozvrat ispravlen, dobavleny povtory )";
 
-        public void Fix(FixParameters p)
+        public List<string> FixLines(List<string> lines, FixParameters p)
         {
-            if (!File.Exists(p.InputFile))
-                throw new FileNotFoundException("Файл не найден: " + p.InputFile);
+            if (lines == null || lines.Count == 0)
+                throw new ArgumentException("Пустой входной список строк.");
 
-            List<string> lines = File.ReadLines(p.InputFile).ToList();
             if (lines.Contains(MarkerConverted))
                 throw new InvalidOperationException("Файл уже был обработан.");
 
@@ -165,7 +160,7 @@ namespace Vector_B4
                 linesResult.Add("");
                 linesResult.Add(string.Format("(* cicl {0} iz {1} *)", i + 1, p.Repeats));
                 linesResult.AddRange(progProlog);
-                linesResult.AddRange(ShiftProgram(linesProgramBody, p.RepeatStep * i, reverse));
+                linesResult.AddRange(ShiftProgram(linesProgramBody, p.RepeatStep * i, reverse, p.Orientation));
                 linesResult.AddRange(progEpilog);
 
                 reverse = !reverse;
@@ -180,17 +175,15 @@ namespace Vector_B4
 
             linesResult.Add("M30");
 
-            // === 6. Сохраняем ===
-            string outputEncoding = "Windows-1251";
-            File.WriteAllLines(p.InputFile, linesResult, Encoding.GetEncoding(outputEncoding));
+            return linesResult;
         }
 
-        private static List<string> ShiftProgram(List<string> lines, decimal offset, bool reverse)
+        private static List<string> ShiftProgram(List<string> lines, decimal offset, bool reverse, AppConfig.OrientationType orientationType)
         {
             bool changed = false;
 
             string orientation;
-            switch (AppConfig.Instance.Orientation)
+            switch (orientationType)
             {
                 case AppConfig.OrientationType.Hor:
                     orientation = "X";
@@ -202,10 +195,8 @@ namespace Vector_B4
                     throw new Exception("Unknown orientation");
             }
 
-            // Паттерн с поддержкой +/-, без ведущего нуля
             string pattern = $@"(?<![A-Z])({orientation}-?(?:\d+(?:\.\d+)?|\.\d+))";
-            var regex = new Regex(pattern, RegexOptions.Compiled);
-
+            var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.CultureInvariant);
             var nfi = new NumberFormatInfo { NumberDecimalSeparator = ".", NumberGroupSeparator = "" };
 
             var result = new List<string>(lines.Count);
@@ -214,8 +205,8 @@ namespace Vector_B4
             {
                 string newLine = regex.Replace(line, match =>
                 {
-                    string token = match.Groups[1].Value; // например "X-3.25"
-                    string numPart = token.Substring(1);  // "-3.25"
+                    string token = match.Groups[1].Value;
+                    string numPart = token.Substring(1);
 
                     if (!decimal.TryParse(numPart, NumberStyles.Float, CultureInfo.InvariantCulture, out decimal value))
                         throw new Exception($"Unable to parse {token}");

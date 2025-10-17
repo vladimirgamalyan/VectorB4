@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Vector_B4
+namespace VectorB4
 {
     public partial class FormMain : Form
     {
@@ -26,7 +26,6 @@ namespace Vector_B4
             var generator = new ScannerGenerator();
             var parameters = new ScannerGenerator.TapParameters
             {
-                OutputPath = Properties.Settings.Default.OutputScanerFile,
                 Radius = numericUpDownRadius.Value,
                 Speed = numericUpDownSpeed.Value,
                 Step = numericUpDownStep.Value,
@@ -35,39 +34,63 @@ namespace Vector_B4
                 InputOblakoFile = Properties.Settings.Default.InputOblakoFile
             };
 
+            string outputPath = Properties.Settings.Default.OutputScanerFile;
+
             try
             {
-                generator.Generate(parameters);
-                MessageBox.Show($"Файл {parameters.OutputPath} успешно создан.", "Готово", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Генерация строк
+                List<string> lines = generator.GenerateLines(parameters);
+
+                // Запись в файл
+                File.WriteAllLines(outputPath, lines, Encoding.GetEncoding("Windows-1251"));
+
+                MessageBox.Show($"Файл {outputPath} успешно создан.",
+                                "Готово",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка генерации: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка генерации: " + ex.Message,
+                                "Ошибка",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
 
         private void buttonConvert_Click(object sender, EventArgs e)
         {
             string sourceFileName = Properties.Settings.Default.InputOblakoFile;
+            string outputFileName = Properties.Settings.Default.OutputDXFFile;
+
             if (!File.Exists(sourceFileName))
             {
                 ShowError("Файл не найден: " + sourceFileName);
                 return;
             }
 
-            var converter = new OblakoToDxfConverter();
-            var parameters = new OblakoToDxfConverter.ConvertParameters
-            {
-                InputFile = Properties.Settings.Default.InputOblakoFile,
-                OutputFile = Properties.Settings.Default.OutputDXFFile,
-                Format = AppConfig.Instance.Format
-            };
-
             try
             {
-                converter.Convert(parameters);
-                MessageBox.Show($"Файл {parameters.OutputFile} успешно создан.", "Готово",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Читаем исходный файл
+                var sourceLines = File.ReadAllLines(sourceFileName, Encoding.GetEncoding("Windows-1251"))
+                                      .ToList();
+
+                // Конвертация
+                var converter = new OblakoToDxfConverter();
+                var parameters = new OblakoToDxfConverter.ConvertParameters
+                {
+                    Format = AppConfig.Instance.Format
+                };
+
+                List<string> dxfLines = converter.ConvertLines(sourceLines, parameters);
+
+                // Запись результата
+                File.WriteAllLines(outputFileName, dxfLines, Encoding.GetEncoding("Windows-1251"));
+
+                MessageBox.Show($"Файл {outputFileName} успешно создан.",
+                                "Готово",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -75,11 +98,12 @@ namespace Vector_B4
             }
         }
 
+
         private void ShowError(string msg)
         {
             MessageBox.Show(
                 msg,
-                "Ошибка вилезла",
+                "Ошибка",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
             );
@@ -94,27 +118,38 @@ namespace Vector_B4
                 return;
             }
 
-            var fixer = new GCodeFixer();
-            var parameters = new GCodeFixer.FixParameters
-            {
-                InputFile = fileName,
-                Repeats = (int)numericUpDownRepeats.Value,
-                RepeatStep = numericUpDownRepeatStep.Value,
-                Format = AppConfig.Instance.Format,
-                Orientation = AppConfig.Instance.Orientation,
-                RepeatsMode = AppConfig.Instance.Repeats
-            };
-
             try
             {
-                fixer.Fix(parameters);
-                MessageBox.Show($"Файл {parameters.InputFile} успешно исправлен.", "Готово", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Чтение входных строк
+                var lines = File.ReadAllLines(fileName, Encoding.GetEncoding("Windows-1251")).ToList();
+
+                var fixer = new GCodeFixer();
+                var parameters = new GCodeFixer.FixParameters
+                {
+                    Repeats = (int)numericUpDownRepeats.Value,
+                    RepeatStep = numericUpDownRepeatStep.Value,
+                    Format = AppConfig.Instance.Format,
+                    Orientation = AppConfig.Instance.Orientation,
+                    RepeatsMode = AppConfig.Instance.Repeats
+                };
+
+                // Исправление G-кода
+                List<string> fixedLines = fixer.FixLines(lines, parameters);
+
+                // Перезапись файла
+                File.WriteAllLines(fileName, fixedLines, Encoding.GetEncoding("Windows-1251"));
+
+                MessageBox.Show($"Файл {fileName} успешно исправлен.",
+                                "Готово",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                ShowError($"Ошибка обработки файла {parameters.InputFile}: " + ex.Message);
+                ShowError($"Ошибка обработки файла {fileName}: " + ex.Message);
             }
         }
+
 
         private bool onLoadSettingFlag = false;
 

@@ -1,4 +1,4 @@
-﻿namespace Vector_B4
+﻿namespace VectorB4
 {
     partial class FormConfig
     {
