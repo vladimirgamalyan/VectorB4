@@ -105,15 +105,14 @@ namespace VectorB4
             }
 
             // === 4. Пролог / эпилог ===
-            List<string> progProlog = new List<string>();
             List<string> progEpilog = new List<string>();
             List<string> progGlobalProlog = new List<string>();
             List<string> progGlobalEpilog = new List<string>();
+            List<string> firstProgramLineList = new List<string> { firstProgramLine };
 
             switch (p.RepeatsMode)
             {
                 case AppConfig.RepeatsType.Zero:
-                    progProlog.Add(firstProgramLine);
                     switch (p.Orientation)
                     {
                         case AppConfig.OrientationType.Hor:
@@ -159,7 +158,8 @@ namespace VectorB4
 
                 linesResult.Add("");
                 linesResult.Add(string.Format("(* cicl {0} iz {1} *)", i + 1, p.Repeats));
-                linesResult.AddRange(progProlog);
+                if (p.RepeatsMode == AppConfig.RepeatsType.Zero)
+                    linesResult.AddRange(ShiftProgram(firstProgramLineList, p.RepeatStep * i, false, p.Orientation));
                 linesResult.AddRange(ShiftProgram(linesProgramBody, p.RepeatStep * i, reverse, p.Orientation));
                 linesResult.AddRange(progEpilog);
 
@@ -214,7 +214,7 @@ namespace VectorB4
                     value -= offset;
                     changed = true;
 
-                    return orientation + value.ToString("0.###", nfi);
+                    return orientation + value.ToString("0.000", nfi);
                 });
 
                 if (reverse)

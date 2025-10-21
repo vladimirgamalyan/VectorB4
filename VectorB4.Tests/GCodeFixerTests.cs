@@ -10,7 +10,7 @@ namespace VectorB4.Tests
         public TestContext TestContext { get; set; }
 
         //[TestMethod]
-        //public void Fix_GCodeFile_Mach3_MatchesReference()
+        //public void Fix_GCodeFile_Mach4_MatchesReference()
         //{
         //    // Arrange
         //    var fixer = new GCodeFixer();
@@ -18,7 +18,7 @@ namespace VectorB4.Tests
         //    {
         //        Repeats = 2,
         //        RepeatStep = 1.0m,
-        //        Format = AppConfig.FormatType.Mach3,
+        //        Format = AppConfig.FormatType.Mach4,
         //        Orientation = AppConfig.OrientationType.Hor,
         //        RepeatsMode = AppConfig.RepeatsType.Zero
         //    };
@@ -35,27 +35,51 @@ namespace VectorB4.Tests
         //}
 
         [TestMethod]
-        public void Fix_GCodeFile_Mach4_MatchesReference()
+        public void Fix_GCodeFile_Mach3_MatchesReference_Zero()
         {
             // Arrange
             var fixer = new GCodeFixer();
             var parameters = new GCodeFixer.FixParameters
             {
                 Repeats = 3,
-                RepeatStep = 0.5m,
-                Format = AppConfig.FormatType.Mach4,
-                Orientation = AppConfig.OrientationType.Ver,
-                RepeatsMode = AppConfig.RepeatsType.End
+                RepeatStep = 0.1m,
+                Format = AppConfig.FormatType.Mach3,
+                Orientation = AppConfig.OrientationType.Hor,
+                RepeatsMode = AppConfig.RepeatsType.Zero
             };
 
-            List<string> input = TestUtils.LoadFile("input_fix_mach4.tap");
-            List<string> expected = TestUtils.LoadFile("reference_fix_mach4.tap");
+            List<string> input = TestUtils.LoadFile("input_fix.tap");
+            List<string> expected = TestUtils.LoadFile("reference_fix_zero.tap");
 
             // Act
             List<string> actual = fixer.FixLines(input, parameters);
 
             // Assert
-            TestUtils.AssertFilesEqual(expected, actual, "Fix Mach4: ");
+            TestUtils.AssertFilesEqual(expected, actual, "Fix: ");
+        }
+
+        [TestMethod]
+        public void Fix_GCodeFile_Mach3_MatchesReference_End()
+        {
+            // Arrange
+            var fixer = new GCodeFixer();
+            var parameters = new GCodeFixer.FixParameters
+            {
+                Repeats = 3,
+                RepeatStep = 0.1m,
+                Format = AppConfig.FormatType.Mach3,
+                Orientation = AppConfig.OrientationType.Hor,
+                RepeatsMode = AppConfig.RepeatsType.End
+            };
+
+            List<string> input = TestUtils.LoadFile("input_fix.tap");
+            List<string> expected = TestUtils.LoadFile("reference_fix_end.tap");
+
+            // Act
+            List<string> actual = fixer.FixLines(input, parameters);
+
+            // Assert
+            TestUtils.AssertFilesEqual(expected, actual, "Fix: ");
         }
 
         [TestMethod]

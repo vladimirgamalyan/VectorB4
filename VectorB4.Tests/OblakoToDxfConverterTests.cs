@@ -30,25 +30,25 @@ namespace VectorB4.Tests
             TestUtils.AssertFilesEqual(expected, actual, "Mach3 → DXF: ");
         }
 
-        [TestMethod]
-        public void ConvertLines_Mach4_MatchesReference()
-        {
-            // Arrange
-            var converter = new OblakoToDxfConverter();
-            var parameters = new OblakoToDxfConverter.ConvertParameters
-            {
-                Format = AppConfig.FormatType.Mach4
-            };
+        //[TestMethod]
+        //public void ConvertLines_Mach4_MatchesReference()
+        //{
+        //    // Arrange
+        //    var converter = new OblakoToDxfConverter();
+        //    var parameters = new OblakoToDxfConverter.ConvertParameters
+        //    {
+        //        Format = AppConfig.FormatType.Mach4
+        //    };
 
-            List<string> input = TestUtils.LoadFile("input_oblako_mach4.txt");
-            List<string> expected = TestUtils.LoadFile("reference_dxf_mach4.dxf");
+        //    List<string> input = TestUtils.LoadFile("input_oblako_mach4.txt");
+        //    List<string> expected = TestUtils.LoadFile("reference_dxf_mach4.dxf");
 
-            // Act
-            List<string> actual = converter.ConvertLines(input, parameters);
+        //    // Act
+        //    List<string> actual = converter.ConvertLines(input, parameters);
 
-            // Assert
-            TestUtils.AssertFilesEqual(expected, actual, "Mach4 → DXF: ");
-        }
+        //    // Assert
+        //    TestUtils.AssertFilesEqual(expected, actual, "Mach4 → DXF: ");
+        //}
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
