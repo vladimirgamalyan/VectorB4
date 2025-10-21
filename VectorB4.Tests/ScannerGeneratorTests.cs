@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using UnitTestProject1;
-using VectorB4;
 
-namespace UnitTestProject1
+namespace VectorB4.Tests
 {
     [TestClass]
     public class ScannerGeneratorTests
