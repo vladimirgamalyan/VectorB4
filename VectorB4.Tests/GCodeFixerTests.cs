@@ -48,8 +48,8 @@ namespace VectorB4.Tests
                 RepeatsMode = AppConfig.RepeatsType.Zero
             };
 
-            List<string> input = TestUtils.LoadFile("input_fix.tap");
-            List<string> expected = TestUtils.LoadFile("reference_fix_zero.tap");
+            List<string> input = TestUtils.LoadFile("Input/gcode_fix.txt");
+            List<string> expected = TestUtils.LoadFile("Output/fix_mach3_zero.txt");
 
             // Act
             List<string> actual = fixer.FixLines(input, parameters);
@@ -72,8 +72,8 @@ namespace VectorB4.Tests
                 RepeatsMode = AppConfig.RepeatsType.End
             };
 
-            List<string> input = TestUtils.LoadFile("input_fix.tap");
-            List<string> expected = TestUtils.LoadFile("reference_fix_end.tap");
+            List<string> input = TestUtils.LoadFile("Input/gcode_fix.txt");
+            List<string> expected = TestUtils.LoadFile("Output/fix_mach3_end.txt");
 
             // Act
             List<string> actual = fixer.FixLines(input, parameters);
@@ -98,7 +98,7 @@ namespace VectorB4.Tests
             };
 
             // Входной файл уже содержит маркер "( vozvrat ispravlen, dobavleny povtory )"
-            List<string> input = TestUtils.LoadFile("input_already_fixed.tap");
+            List<string> input = TestUtils.LoadFile("Input/already_fixed.txt");
 
             // Act
             fixer.FixLines(input, parameters);

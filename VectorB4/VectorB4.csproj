@@ -80,7 +80,6 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="GCodeFixer.cs" />
-    <Compile Include="GCodeParser.cs" />
     <Compile Include="OblakoToDxfConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

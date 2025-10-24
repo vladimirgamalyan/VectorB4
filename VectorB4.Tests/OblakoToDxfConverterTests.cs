@@ -20,8 +20,8 @@ namespace VectorB4.Tests
             };
 
             // Загружаем вход и эталон через TestUtils
-            List<string> input = TestUtils.LoadFile("input_oblako_mach3.txt");
-            List<string> expected = TestUtils.LoadFile("reference_dxf_mach3.dxf");
+            List<string> input = TestUtils.LoadFile("Input/oblako_mach3.txt");
+            List<string> expected = TestUtils.LoadFile("Output/dxf_mach3.dxf");
 
             // Act
             List<string> actual = converter.ConvertLines(input, parameters);
@@ -40,8 +40,8 @@ namespace VectorB4.Tests
         //        Format = AppConfig.FormatType.Mach4
         //    };
 
-        //    List<string> input = TestUtils.LoadFile("input_oblako_mach4.txt");
-        //    List<string> expected = TestUtils.LoadFile("reference_dxf_mach4.dxf");
+        //    List<string> input = TestUtils.LoadFile("Input/input_oblako_mach4.txt");
+        //    List<string> expected = TestUtils.LoadFile("Output/reference_dxf_mach4.dxf");
 
         //    // Act
         //    List<string> actual = converter.ConvertLines(input, parameters);

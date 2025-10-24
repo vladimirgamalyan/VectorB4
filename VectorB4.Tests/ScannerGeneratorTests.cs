@@ -25,7 +25,7 @@ namespace VectorB4.Tests
                 InputOblakoFile = "oblako.txt"
             };
 
-            List<string> expected = TestUtils.LoadFile("reference_scan.tap");
+            List<string> expected = TestUtils.LoadFile("Output/scan.txt");
 
             // Act
             List<string> actual = generator.GenerateLines(parameters);
